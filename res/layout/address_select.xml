@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/blue"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/address_selec"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray"
+        android:gravity="center"
+        android:text="@string/tip_tablet"
+        android:textColor="@color/black"
+        android:textSize="35sp" />
+
+    <LinearLayout
+        android:layout_weight="4"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/address_select_01"
+            android:text="鳥取砂丘"
+            android:tag="1457"
+            style="@style/touchbtn" />
+
+        <Button
+            android:id="@+id/address_select_02"
+            style="@style/touchbtn" />
+
+        <Button
+            android:id="@+id/address_select_03"
+            style="@style/touchbtn" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="4"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/address_select_04"
+            style="@style/touchbtn" />
+
+        <Button
+            android:id="@+id/address_select_05"
+            style="@style/touchbtn" />
+
+        <Button
+            android:id="@+id/address_select_06"
+            style="@style/touchbtn" />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_weight="4"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal" >
+
+        <Button
+                android:id="@+id/address_select_07"
+                style="@style/touchbtn" />
+
+        <Button
+                android:id="@+id/address_select_08"
+                style="@style/touchbtn" />
+
+        <Button
+                android:id="@+id/address_select_09"
+                style="@style/touchbtn" />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_weight="0"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+        <Button
+                android:id="@+id/address_select_00"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="3"
+                android:scaleType="fitXY"
+                android:text="@string/departure"
+                android:textColor="@color/white"
+                android:textSize="28px"
+                android:background="@color/green"
+                android:visibility="visible"/>
+
+       <Button
+                android:id="@+id/address_select_self"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="2"
+                android:scaleType="fitXY"
+                android:text="@string/tip_select_self"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:background="@drawable/bg_shape"/>
+    </LinearLayout>
+
+</LinearLayout>

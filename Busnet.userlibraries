@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="android-support">
+    <archive path="C:/Sites/Busnet/libs/android-support-v13.jar" />
+    <archive path="C:/Sites/Busnet/libs/ormlite-android-4.48.jar" />
+    <archive path="C:/Sites/Busnet/libs/ormlite-core-4.48.jar" />
+  </library>
+  <library name="android-support-v13">
+    <archive path="C:/Intel/apkdev/ggmap/MainActivity/libs/android-support-v13.jar" />
+  </library>
+  <library name="google-play-services">
+    <archive path="C:/Program Files (x86)/Android/android-sdk/extras/google/google_play_services/libproject/google-play-services_lib/libs/google-play-services.jar" />
+  </library>
+</eclipse-userlibraries>
+

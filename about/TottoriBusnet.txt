@@ -1,0 +1,22 @@
+﻿google map api:
+kab.tottori@gmai.com
+AIzaSyAA4GjyWCMSchWSzBh76Q3LaOdkU9T0NEY
+
+google android map v2 api? もこれで兼ねる事ができるらしい？　これはイレギュラー？
+
+
+androidアプリの開発では、keystoreが必要になりつつある。
+
+各パスワードは、小文字英数16桁とする(Android端末から打ち込む可能性等考えて、少し緩めに）
+
+keystore:
+TottoriBusnet
+txr0qv7j0efqptom
+
+alias:
+BusnetForAndroid
+aaofj4qi2cijbwvz
+
+app:
+BusnetLocation
+n14kd0cpjjf80u0d

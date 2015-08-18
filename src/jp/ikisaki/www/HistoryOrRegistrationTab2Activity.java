@@ -1,0 +1,296 @@
+package jp.ikisaki.www;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnCreateContextMenuListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class HistoryOrRegistrationTab2Activity extends Activity implements OnClickListener {
+	static final int MENUITEM_ID_DELETE = 1;
+	ListView itemListView;
+	EditText noteEditText;
+	Button saveButton;
+	static RegistrationDBAdapter registrationdbAdapter;
+	static NoteListAdapter listAdapter;
+	static List<Note> noteList = new ArrayList<Note>();
+	static String type = "";
+
+	ArrayList<BusstopsModel> busstopsModels = null;
+	//TimetableModel.getBusstopsModel();
+
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		setContentView(R.layout.history_or_registration_tab2);
+
+		findViews();
+		setListeners();
+
+		registrationdbAdapter = new RegistrationDBAdapter(this);
+		listAdapter = new NoteListAdapter();
+		itemListView.setAdapter(listAdapter);
+
+		Intent intent = getIntent();
+        type = intent.getStringExtra("keyword");
+
+        if (type.equals("timetableDestination")) {
+        	System.out.println("logcat:7:" + type + " " + TimetableModel.getBusstopsModel().size());
+        	busstopsModels = TimetableModel.getBusstopsModel();
+        }
+		loadNote();
+	}
+
+	protected void findViews() {
+		itemListView = (ListView) findViewById(R.id.itemListView);
+//		noteEditText = (EditText) findViewById(R.id.memoEditText);
+//		saveButton = (Button) findViewById(R.id.saveButton);
+	}
+
+	protected void loadNote() {
+		noteList.clear();
+
+		// Read
+		registrationdbAdapter.open();
+		Cursor c = registrationdbAdapter.getAllRegMarks();
+
+		startManagingCursor(c);
+
+		if (c.moveToFirst()) {
+
+			do {
+				Note note = new Note(c.getInt(c
+						.getColumnIndex(DBAdapter.COL_ID)), c.getString(c
+						.getColumnIndex(DBAdapter.COL_NOTE)), c.getString(c
+						.getColumnIndex(DBAdapter.COL_LASTUPDATE)));
+
+				if (type.equals("departure") || type.equals("destination")) {
+
+					noteList.add(0, note);
+
+				} else {
+					if (((note.getNote().indexOf("駅(") != -1) || (note.getNote().indexOf("バス停") != -1)) && note.getLastupdate().indexOf(",") == -1) {
+						if (type.equals("timetableDeparture")) {
+							noteList.add(0, note);
+						} else if (type.equals("timetableDestination")) {
+
+							System.out.println("logcat:7:timetableDestination:size:" + busstopsModels.size());
+							for (int i = 0; i < busstopsModels.size(); i++) {
+								System.out.println("logcat:7:timetableDestination:" + busstopsModels.get(i).getName());
+
+								if (note.getNote().equals(busstopsModels.get(i).getName())) {
+									noteList.add(0, note);
+								}
+							}
+						}
+					}
+				}
+			} while (c.moveToNext());
+		}
+
+		stopManagingCursor(c);
+		registrationdbAdapter.close();
+
+		listAdapter.notifyDataSetChanged();
+	}
+
+	protected void saveItem() {
+		registrationdbAdapter.open();
+		registrationdbAdapter.saveNote(noteEditText.getText().toString(), "kon");
+		registrationdbAdapter.close();
+		noteEditText.setText("");
+		loadNote();
+	}
+
+	protected void setListeners() {
+		//saveButton.setOnClickListener(this);
+
+		itemListView
+				.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
+					@Override
+					public void onCreateContextMenu(ContextMenu menu, View v,
+							ContextMenuInfo menuInfo) {
+						menu.add(0, MENUITEM_ID_DELETE, 0, "削除");
+					}
+				});
+
+		itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+	        @Override
+	        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+	            if (type.equals("departure")) {
+                    int index = noteList.get(position).getLastupdate().indexOf(","); 
+	            	if (index != -1) {
+	            		int longitude = 0;
+						int latitude = 0;
+
+						longitude = Integer.valueOf(noteList.get(position).getLastupdate().substring(0, index));
+						latitude = Integer.valueOf(noteList.get(position).getLastupdate().substring(index + 1));
+
+						PointModel departureModel = new PointModel(0, noteList.get(position).getNote(), "", longitude, latitude, 0);
+
+	            		BasicModel.setDeparture(departureModel);
+	            	} else {
+	            		PointModel departureModel = new PointModel(Integer.valueOf(noteList.get(position).getLastupdate()), noteList.get(position).getNote(), "", 0, 0, 0);
+
+	            		BasicModel.setDeparture(departureModel);
+	            	}
+				} else if (type.equals("destination")) {
+                    int index = noteList.get(position).getLastupdate().indexOf(",");
+					if (index != -1) {
+						int longitude = 0;
+						int latitude = 0;
+
+						longitude = Integer.valueOf(noteList.get(position).getLastupdate().substring(0, index));
+						latitude = Integer.valueOf(noteList.get(position).getLastupdate().substring(index + 1));
+
+						PointModel destinationModel = new PointModel(0, noteList.get(position).getNote(), "", longitude, latitude, 0);
+
+						BasicModel.setDestination(destinationModel);
+	            	} else {
+						PointModel destinationModel = new PointModel(Integer.valueOf(noteList.get(position).getLastupdate()), noteList.get(position).getNote(), "", 0, 0, 0);
+
+						BasicModel.setDestination(destinationModel);
+					}
+				} else if (type.equals("timetableDeparture")) {
+					TimetableModel.setStartId(Integer.valueOf(noteList.get(position).getLastupdate()));
+					TimetableModel.setStartName(noteList.get(position).getNote());
+					TimetableModel.setDestinationId(0);
+					TimetableModel.setDestinationName("");
+				} else if (type.equals("timetableDestination")) {
+					TimetableModel.setDestinationId(Integer.valueOf(noteList.get(position).getLastupdate()));
+					TimetableModel.setDestinationName(noteList.get(position).getNote());
+				}
+
+	            System.out.println("logcat:7:start");
+
+	            String tempNote = noteList.get(position).getNote();
+	            String tempLastupdate = noteList.get(position).getLastupdate();
+	            registrationdbAdapter.open();
+	            registrationdbAdapter.deleteNote(noteList.get(position).getId());
+	            registrationdbAdapter.close();
+	            System.out.println("logcat:7:goal");
+
+	            registrationdbAdapter.open();
+	            registrationdbAdapter.saveNote(tempNote, tempLastupdate);
+	            registrationdbAdapter.close();
+
+	            if (type.equals("departure") || type.equals("destination")) {
+	            	Intent intent = new Intent(HistoryOrRegistrationTab2Activity.this,
+	            			RouteSearchActivity.class);
+	            	intent.putExtra("keyword", "");
+	            	startActivity(intent);
+	            } else {
+	            	Intent intent = new Intent(HistoryOrRegistrationTab2Activity.this,
+	            			TimetableSearchActivity.class);
+	            	intent.putExtra("keyword", "keyword");
+	            	startActivity(intent);
+	            }
+	        }
+	    });
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+		case MENUITEM_ID_DELETE:
+			AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item
+					.getMenuInfo();
+
+			Note note = noteList.get(menuInfo.position);
+			final int noteId = note.getId();
+
+			new AlertDialog.Builder(this)
+					.setIcon(R.drawable.icon)
+					.setTitle("本当に削除してもよろしいですか?")
+					.setPositiveButton("はい",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									registrationdbAdapter.open();
+									if (registrationdbAdapter.deleteNote(noteId)) {
+										Toast.makeText( getBaseContext(), "The note was successfully deleted.", Toast.LENGTH_SHORT);
+										loadNote();
+									}
+									registrationdbAdapter.close();
+								}
+							}).setNegativeButton("いいえ", null).show();
+
+			return true;
+		}
+		return super.onContextItemSelected(item);
+	}
+
+	@Override
+	public void onClick(View v) {
+//		switch (v.getId()) {
+//		case R.id.saveButton:
+//			saveItem();
+//			break;
+//		}
+
+	}
+
+	private class NoteListAdapter extends BaseAdapter {
+
+		@Override
+		public int getCount() {
+			return noteList.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return noteList.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			TextView noteTextView;
+			TextView lastupdateTextView;
+			View v = convertView;
+			if (v == null) {
+				LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				v = inflater.inflate(R.layout.row, null);
+			}
+			Note note = (Note) getItem(position);
+			if (note != null) {
+				noteTextView = (TextView) v.findViewById(R.id.noteTextView);
+				lastupdateTextView = (TextView) v
+						.findViewById(R.id.lastupdateTextView);
+				noteTextView.setText(note.getNote());
+				lastupdateTextView.setText(note.getLastupdate());
+				//変えたv.setTag(R.id.noteTextView, note);
+			}
+			return v;
+		}
+	}
+}

@@ -1,0 +1,1 @@
+﻿{"dbver":"2015043007", "dburl":"http://192.168.2.2:81/android_landmark_db/update_20150508.sqlite3", "dbtip":"「最新のデータベース」\n更新完成"}

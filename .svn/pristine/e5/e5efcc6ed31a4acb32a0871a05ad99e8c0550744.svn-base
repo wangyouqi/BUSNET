@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <DatePicker
+            android:id="@+id/time_and_route_tab3_datePicker"
+            android:layout_width="wrap_content"
+			android:layout_height="0dip"
+            android:layout_gravity="center"
+			android:layout_weight="8"
+            android:background="@color/black"
+            android:calendarViewShown="false" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dip"
+            android:layout_marginTop="5sp"
+            android:layout_weight="8"
+            android:orientation="horizontal" >
+
+            <TimePicker
+                android:id="@+id/time_and_route_tab3_timePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="@color/black" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical" >
+
+                <RadioGroup
+                    android:id="@+id/radiogroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="@string/at_this_time"
+                        android:textColor="@color/black"
+                        android:textSize="30sp" />
+
+                    <RadioButton
+                        android:id="@+id/forward_radioButton1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:checked="true"
+                        android:text="@string/departure_radio"
+                        android:textColor="@color/black"
+                        android:textSize="40sp" />
+
+                    <RadioButton
+                        android:id="@+id/backward_radioButton2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="@string/destination_radio"
+                        android:textColor="@color/black"
+                        android:textSize="40sp" />
+                </RadioGroup>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/decision_button"
+            android:layout_width="fill_parent"
+            android:layout_height="0dip"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/dark_blue"
+            android:text="@string/decision"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:layout_weight="1"
+            android:layout_marginTop="2sp"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp" />
+    </LinearLayout>

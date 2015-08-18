@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="50sp"
+    android:background="@color/gray"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="2sp"
+        android:layout_weight="1"
+        android:background="@color/dark_blue"
+        android:gravity="center"
+        android:text="@string/close"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#CCCCCC"
+        android:gravity="center"
+        android:text="@string/result_of_route_search"
+        android:textColor="@color/black"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/save_the_route_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="2sp"
+        android:layout_weight="1"
+        android:background="@color/dark_blue"
+        android:gravity="center"
+        android:text="@string/save_the_route"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+</LinearLayout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:title="@string/app_name" >
+
+    <PreferenceCategory android:title="@string/update"></PreferenceCategory>
+    <SwitchPreference
+            android:key="UPDATE_ENABLED"
+            android:icon="@android:drawable/ic_input_get"
+            android:summaryOn="データベースの更新をチェックする"
+            android:summaryOff="データベースの更新をチェックしない"
+            android:title="@string/update" />
+
+    <PreferenceCategory android:title="@string/management_point"></PreferenceCategory>
+    <Preference
+            android:icon="@android:drawable/ic_menu_edit"
+            android:title="@string/management_point"
+            android:summary="地点を管理する" >
+        <intent android:action="SettingActivity" >
+            <extra android:name="keyword" android:value="setting" />
+        </intent>
+    </Preference>
+
+    <Preference
+            android:key="START_NAME"
+            android:icon="@android:drawable/ic_menu_manage"
+            android:title="@string/set_start_location"
+            android:summary="出発地を設定する" >
+        <intent android:action="SpecifyPointActivity" >
+            <extra android:name="keyword" android:value="departure" />
+        </intent>
+    </Preference>
+
+    <jp.ikisaki.www.SeekBarPreference
+            android:key="RADIUS"
+            android:icon="@android:drawable/btn_radio"
+            android:title="@string/radius"
+            android:summary="ランドマークの表示半径を設定する"
+            android:defaultValue="50"
+            android:max="200"
+            android:dialogMessage="0-2000メートル"
+            android:text="0メートル" />
+
+    <PreferenceCategory android:title="@string/system"></PreferenceCategory>
+    <CheckBoxPreference
+            android:key="FULL"
+            android:icon="@android:drawable/star_big_off"
+            android:defaultValue="false"
+            android:title="@string/fullscreen"
+            android:summary="@string/fullscreen" />
+
+    <CheckBoxPreference
+            android:key="MANUAL"
+            android:icon="@android:drawable/btn_star"
+            android:defaultValue="false"
+            android:title="@string/display"
+            android:summary="@string/manual" />
+
+    <jp.ikisaki.www.SeekBarPreference
+            android:key="BRIGHTNESS"
+            android:icon="@android:drawable/btn_star_big_on"
+            android:title="@string/bright"
+            android:summary="画面の明るさを調整する"
+            android:dependency="MANUAL"
+            android:max="250"
+            android:dialogMessage="0-250%"
+            android:text="％" />
+
+    <PreferenceCategory android:title="@string/other"></PreferenceCategory>
+    <Preference
+            android:key="OTHER1"
+            android:icon="@android:drawable/ic_menu_mapmode"
+            android:title="@string/service"
+            android:summary="@string/service" >
+        <intent android:action="android.intent.action.VIEW"
+                android:data="https://play.google.com/store/apps/details?id=com.google.android.gms" />
+    </Preference>
+
+    <Preference
+            android:key="LEGAL"
+            android:icon="@android:drawable/ic_menu_myplaces"
+            android:title="@string/legal"
+            android:summary="" >
+        <intent android:action="android.intent.action.VIEW"
+                android:data="http://www.ikisaki.jp/home/terms" />
+    </Preference>
+
+</PreferenceScreen>

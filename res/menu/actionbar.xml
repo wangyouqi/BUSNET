@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+            android:id="@+id/action_start"
+            android:icon="@android:drawable/ic_menu_rotate"
+            android:orderInCategory="101"
+            android:showAsAction="ifRoom|withText"
+            android:textSize="30sp"
+            android:title="@string/menu_start"/>
+
+    <item
+            android:id="@+id/action_back"
+            android:icon="@android:drawable/ic_menu_revert"
+            android:orderInCategory="102"
+            android:showAsAction="ifRoom|withText"
+            android:title="@string/menu_back"/>
+
+    <item
+            android:id="@+id/action_snapshot"
+            android:orderInCategory="103"
+            android:showAsAction="never"
+            android:title="@string/snapshot"/>
+
+    <item
+            android:id="@+id/action_record"
+            android:orderInCategory="104"
+            android:showAsAction="never"
+            android:title="@string/bookmark"/>
+
+    <item
+            android:id="@+id/action_settings"
+            android:orderInCategory="105"
+            android:showAsAction="never"
+            android:title="@string/setting"/>
+</menu>

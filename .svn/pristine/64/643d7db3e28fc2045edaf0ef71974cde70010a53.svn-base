@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/blue"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="@color/black"
+        android:textSize="35sp" />
+
+    <LinearLayout
+        android:layout_weight="3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/route_search_imgbtn"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/route" />
+
+        <ImageButton
+            android:id="@+id/timetable_imgbtn"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/timetable" />
+
+        <ImageButton
+            android:id="@+id/share_imgbtn"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/share" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/setting_imgbtn"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/setting" />
+
+        <ImageButton
+            android:id="@+id/operation_status_imgbtn"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/operation" />
+
+        <ImageButton
+            android:id="@+id/bus_guide_imgbtn"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/sns" />
+    </LinearLayout>
+
+	<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="80dip"
+        android:orientation="horizontal" >
+
+    <ImageButton
+            android:id="@+id/information"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:layout_centerVertical="true"
+            android:src="@drawable/information" />
+
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="TEST"
+                android:id="@+id/rrr" android:layout_weight="1"
+                android:background="@color/gray"/>
+
+
+        <ImageButton
+            android:id="@+id/inquiry"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:layout_centerVertical="true"
+            android:src="@drawable/inquiry" />
+    </LinearLayout>
+</LinearLayout>

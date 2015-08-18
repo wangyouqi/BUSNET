@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:minHeight="200dp" >
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <WebView
+                android:id="@+id/route_sharing_webView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="1sp"
+                android:layout_marginRight="1sp"
+                android:layout_marginTop="1sp"
+                />
+
+        <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="bottom|right"-->
+                <!--android:background="#D000"-->
+                <!--android:orientation="vertical"-->
+                <!--android:padding="5dp">-->
+
+            <!--<Button-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:onClick="onCancel"-->
+                    <!--android:layout_marginTop="1sp"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--android:background="@color/dark_blue"-->
+                    <!--android:textSize="25sp"-->
+                    <!--android:text="@string/close"/>-->
+        <!--</LinearLayout>-->
+    </FrameLayout>
+
+</LinearLayout>

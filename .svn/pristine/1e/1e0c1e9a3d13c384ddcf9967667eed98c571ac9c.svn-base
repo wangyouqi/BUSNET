@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/current_time_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="@string/now"
+            android:textColor="@color/black"
+            android:textSize="39sp" />
+
+        <Button
+            android:id="@+id/decision_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:background="@color/dark_blue"
+            android:textSize="40sp"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:text="@string/decision" />
+    </LinearLayout>
+
+</ScrollView>

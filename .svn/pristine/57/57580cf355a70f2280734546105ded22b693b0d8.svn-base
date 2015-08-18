@@ -1,0 +1,354 @@
+package jp.ikisaki.www;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.StrictMode;
+import android.text.format.Time;
+import android.util.TypedValue;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+
+public class ResultOfTimetableSearchActivity extends Activity{
+
+	public String numCheck(int num){
+		String str = Integer.toString(num);
+		if(num < 10){
+			return "0" + str;
+		}
+		return str;
+	}
+
+	//ここまでもどす
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.route_of_walk);
+		final Handler handler = new Handler();
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						System.out.println("logcat:parun");
+					}
+				});
+				 try {
+				        Thread.sleep(0);
+				    } catch (InterruptedException e) {
+				    	System.out.println("logcat:6:error:" + e);
+				    }
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						System.out.println("logcat:parunfin");
+					}});
+			}
+		}).start();
+
+
+
+		final ScrollView scrollView = new ScrollView(this);
+	    TableLayout tableLayout = new TableLayout(this);
+	    tableLayout.setOrientation(TableLayout.VERTICAL);
+	    WindowManager wm;
+		Display disp;
+		String start = "";
+		String goal = "";
+		String timetableUrl = "";
+		String date = "";
+		int counter = 0;
+		Time now = new Time("Asia/Tokyo");
+		now.setToNow();
+		ArrayList<String> routeInfoArrayList = new ArrayList<String>();
+
+//		timetableUrl = "http://www.ikisaki.jp/index.cgi?device=xml&page=timetable_search&s_id=783&d_id=1791&bus=nikkou&bus=hinomaru";
+
+		if(TimetableModel.getDay() != 0 || TimetableModel.getDay() != 0){
+			date = "&date=" + TimetableModel.getMonth() + "," + TimetableModel.getDay();
+		}
+
+		timetableUrl = "http://www.ikisaki.jp/index.cgi?device=xml&page=timetable_search&s_id=" + TimetableModel.getStartId() + "&d_id=" + TimetableModel.getDestinationId() + TimetableModel.getLine() + date;
+
+		System.out.println("logcat:resulttime:" + timetableUrl);
+		System.out.println("logcat:pa11");
+
+
+
+		wm = (WindowManager)getSystemService(WINDOW_SERVICE);
+		disp = wm.getDefaultDisplay();
+		int width = disp.getWidth();
+		final int	height = disp.getHeight();
+
+		TableLayout timetableTableLayout = new TableLayout(this);
+		timetableTableLayout.setOrientation(TableLayout.VERTICAL);
+
+		TableRow menuTableRow = new TableRow(this);
+		LinearLayout menuLayout = new LinearLayout(this);
+		menuLayout.setOrientation(LinearLayout.HORIZONTAL);
+		menuLayout.setGravity(Gravity.CENTER);
+		menuLayout.setBackgroundColor(Color.GRAY);
+		menuLayout.setPadding(2, 2, 2, 2);
+
+		TextView menuTextView = new TextView(this);
+		menuTextView.setBackgroundColor(Color.LTGRAY);
+		menuTextView.setTextColor(Color.BLACK);
+		menuTextView.setWidth(width - (width / 4));
+		menuTextView.setHeight(height / 10);
+		menuTextView.setGravity(Gravity.CENTER);
+		menuTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, height / 34);
+//		menuTextView.setText("鳥取駅→イオンバス停");
+
+		Button menuButton = new Button(this);
+		menuButton.setBackgroundColor(Color.BLUE);
+		menuButton.setHeight(height / 10);
+		menuButton.setGravity(Gravity.CENTER);
+		menuButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, height / 30);
+		menuButton.setText("閉じる");
+		menuButton.setWidth(width / 4);
+		menuButton.setPadding(2, 2, 2, 2);
+		menuButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+
+		try{
+		    XmlPullParser xmlPullParser = XmlPullParserFactory.newInstance().newPullParser();
+		    StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
+		    URL url;
+
+		    String uuid = "&android_id=";
+		    final Context context = this;
+		    BufferedReader in = null;
+	        try{
+	        	FileInputStream file = context.openFileInput("sample.txt");
+	        	in = new BufferedReader(new InputStreamReader(file));
+	        	//System.out.println("logcat:10:" + in.readLine());
+	        	uuid += in.readLine();
+	        	in.close();
+	        }catch(IOException e){
+	        	e.printStackTrace();
+	        }
+
+		    url = new URL(timetableUrl + uuid);
+
+		    System.out.println("logcat:10:url: " + url);
+
+		    HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+		    connection.setRequestProperty("User-Agent", "Android/Busnet");
+		    connection.setRequestMethod("GET");
+
+		    xmlPullParser.setInput(connection.getInputStream(), "UTF-8");
+
+		    int eventType;
+		    while ((eventType = xmlPullParser.next()) != XmlPullParser.END_DOCUMENT) {
+		    	String str = "";
+		    	if(eventType == XmlPullParser.START_TAG && "Start".equals(xmlPullParser.getName())){
+		    		int subEventType;
+		    		subEventType = xmlPullParser.next();
+
+		    		while(!(subEventType == XmlPullParser.END_TAG && "Start".equals(xmlPullParser.getName()))){
+
+		    			if(eventType == XmlPullParser.START_TAG && "Name".equals(xmlPullParser.getName())){
+		    				str = xmlPullParser.nextText();
+		    				start = str;
+		    			}
+		    			subEventType = xmlPullParser.next();
+		    		}
+		    	}
+		    	else if(eventType == XmlPullParser.START_TAG && "Goal".equals(xmlPullParser.getName())){
+		    		int subEventType;
+		    		subEventType = xmlPullParser.next();
+
+		    		while(!(subEventType == XmlPullParser.END_TAG && "Goal".equals(xmlPullParser.getName()))){
+
+		    			if(eventType == XmlPullParser.START_TAG && "Name".equals(xmlPullParser.getName())){
+		    				str = xmlPullParser.nextText();
+		    				goal = str;
+		    			}
+		    			subEventType = xmlPullParser.next();
+		    		}
+		    	}
+		    	else if(eventType == XmlPullParser.START_TAG && "RouteInfo".equals(xmlPullParser.getName())){
+		    		int subEventType;
+		    		subEventType = xmlPullParser.next();
+
+		    		while(!(subEventType == XmlPullParser.END_TAG && "RouteInfo".equals(xmlPullParser.getName()))){
+
+		    			if(eventType == XmlPullParser.START_TAG && "Name".equals(xmlPullParser.getName())){
+		    				str = xmlPullParser.nextText();
+		    				routeInfoArrayList.add(str);
+		    			}
+		    			subEventType = xmlPullParser.next();
+		    		}
+		    	}
+		    }
+		} catch (Exception e){
+		    System.out.println("logcat:(errore)→" + e);
+		}
+
+
+		try{
+		    XmlPullParser xmlPullParser = XmlPullParserFactory.newInstance().newPullParser();
+		    StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
+		    URL url;
+
+		    url = new URL(timetableUrl);
+
+		    HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+		    connection.setRequestMethod("GET");
+
+		    xmlPullParser.setInput(connection.getInputStream(), "UTF-8");
+
+		    int eventType;
+		    while ((eventType = xmlPullParser.next()) != XmlPullParser.END_DOCUMENT) {
+		    	String str = "";
+		    	String rosen = "";
+		    	String hour = "";
+		    	String minute = "";
+		    	String time = "";
+
+		    	if(eventType == XmlPullParser.START_TAG && "Bus".equals(xmlPullParser.getName())){
+		    		int subEventType;
+		    		subEventType = xmlPullParser.next();
+		    		LinearLayout layout = new LinearLayout(this);
+		    		TableRow tableRow = new TableRow(this);
+		    		tableRow.setPadding(2, 2, 2, 2);
+		    		tableRow.setBackgroundColor(Color.BLACK);
+
+		    		while(!(subEventType == XmlPullParser.END_TAG && "Bus".equals(xmlPullParser.getName()))){
+
+		    			if(eventType == XmlPullParser.START_TAG && "Num".equals(xmlPullParser.getName())){
+		    				str = xmlPullParser.nextText();
+		    				rosen = routeInfoArrayList.get(Integer.valueOf(str) - 1);
+		    			}
+		    			else if(eventType == XmlPullParser.START_TAG && "Hour".equals(xmlPullParser.getName())){
+		    				str = xmlPullParser.nextText();
+		    				hour = str;
+		    			}
+		    			else if(eventType == XmlPullParser.START_TAG && "Minute".equals(xmlPullParser.getName())){
+		    				str = xmlPullParser.nextText();
+		    				minute = str;
+		    			}
+		    			subEventType = xmlPullParser.next();
+		    		}
+		    		TextView nameTextView = new TextView(this);
+
+	    			nameTextView.setTextColor(Color.BLACK);
+	    			nameTextView.setWidth(width - (width / 4));
+	    			nameTextView.setHeight(height / 10);
+	    			nameTextView.setGravity(Gravity.CENTER);
+	    			nameTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, height / 28);
+
+	    			TextView timeTextView = new TextView(this);
+
+	    			if((now.hour > Integer.valueOf(hour)) || (now.hour == Integer.valueOf(hour) && now.minute >= Integer.valueOf(minute))){
+	    				if((TimetableModel.getMonth() == (now.month + 1) && TimetableModel.getDay() == (now.monthDay)) || date == ""){
+	    					timeTextView.setBackgroundColor(Color.GRAY);
+	    					nameTextView.setBackgroundColor(Color.GRAY);
+	    					counter++;
+	    				}
+	    				else{
+	    					timeTextView.setBackgroundColor(Color.WHITE);
+		    				nameTextView.setBackgroundColor(Color.WHITE);
+	    				}
+	    			}
+	    			else{
+	    				timeTextView.setBackgroundColor(Color.WHITE);
+	    				nameTextView.setBackgroundColor(Color.WHITE);
+	    			}
+	    			timeTextView.setTextColor(Color.BLACK);
+	    			timeTextView.setWidth(width / 4);
+	    			timeTextView.setHeight(height / 10);
+	    			timeTextView.setGravity(Gravity.CENTER);
+	    			timeTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, height / 24);
+
+		    		time = numCheck(Integer.valueOf(hour)) + ":" + numCheck(Integer.valueOf(minute));
+
+		    		timeTextView.setText(time);
+		    		nameTextView.setText(rosen);
+
+		    		layout.setGravity(Gravity.CENTER);
+		    		layout.addView(timeTextView);
+		    		layout.addView(nameTextView);
+
+		    		tableRow.addView(layout);
+		    		tableLayout.addView(tableRow);
+		    	}
+		    }
+
+		    String day = "";
+
+		    if(date == ""){
+		    	date = "(" + (now.month + 1) + "月" + now.monthDay + "日)";
+		    }
+		    else{
+		    	date = "(" + TimetableModel.getMonth() + "月" + TimetableModel.getDay() + "日)";
+		    }
+
+		    menuTextView.setText(start + "→" + goal + " " + date);
+		    menuLayout.addView(menuButton);
+			menuLayout.addView(menuTextView);
+			menuTableRow.addView(menuLayout);
+			timetableTableLayout.addView(menuTableRow);
+		    scrollView.addView(tableLayout);
+
+		    final int cnt = counter;
+		    scrollView.post(new Runnable(){
+		    	@Override
+		    	public void run(){
+		    		scrollView.smoothScrollTo(0, (height / 10) * cnt);
+		    	}
+		    });
+
+		    timetableTableLayout.addView(scrollView);
+
+		    System.out.println("logcat:parunnnnnnn");
+		    TimetableSearchActivity.progressDialog.dismiss();
+
+		    setContentView(timetableTableLayout);
+
+
+
+		} catch (Exception e){
+		    System.out.println("logcat:(errore)→" + e);
+		}
+	}
+
+
+
+
+	private void scrollTimetable(ScrollView v){
+		v.smoothScrollTo(200, 200);
+	}
+
+
+}

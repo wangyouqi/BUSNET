@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/blue" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/blue"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50sp"
+            android:background="@color/gray"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/home_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2sp"
+                android:layout_weight="1"
+                android:background="@color/dark_blue"
+                android:gravity="center"
+                android:text="@string/home"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#CCCCCC"
+                android:gravity="center"
+                android:text="@string/timetable_search"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+
+            <Button
+                android:id="@+id/reset_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2sp"
+                android:layout_weight="1"
+                android:background="@color/dark_blue"
+                android:gravity="center"
+                android:text="@string/reset"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/blue"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:layout_marginTop="5sp"
+                android:text="@string/ride_bus_stop"
+                android:textColor="@color/black"
+                android:textSize="35sp" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blue"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/ride_bus_stop_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1sp"
+                    android:layout_marginRight="1sp"
+                    android:layout_weight="5"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:text="@string/plase_input_bus_stop_or_station"
+                    android:textColor="@color/black"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/departure_history_or_registration_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/gray"
+                    android:textColor="@color/black"
+                    android:text="@string/history_or_registration"
+                    android:textSize="28sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/swap_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30sp"
+                android:text="@string/swap"
+                android:background="@color/gray"
+                android:layout_marginTop="5sp"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:layout_marginTop="5sp"
+                android:text="@string/alighting_bus_stop"
+                android:textColor="@color/black"
+                android:textSize="35sp" />
+
+
+             <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blue"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/alighting_bus_stop_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1sp"
+                    android:layout_marginRight="1sp"
+                    android:layout_weight="5"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:text="@string/plase_input_bus_stop_or_station"
+                    android:textColor="@color/black"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/destination_history_or_registration_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"
+                    android:background="@color/gray"
+                    android:text="@string/history_or_registration"
+                    android:enabled="false"
+                    android:textSize="28sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/select_bus_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10sp"
+                android:layout_marginTop="10sp"
+                android:background="@drawable/btn_background"
+                android:text="@string/set_day_and_bus"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/timetable_search_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="28sp"
+                android:background="@drawable/btn_background"
+                android:text="@string/explore_timetable"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

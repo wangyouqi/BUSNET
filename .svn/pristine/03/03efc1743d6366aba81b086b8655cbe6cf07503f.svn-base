@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/dialog_edittext"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:gravity="fill_horizontal"
+            android:textColor="@color/black"
+            android:background="@color/white"
+            android:layout_weight="5"
+            android:inputType="text"
+            android:scrollHorizontally="true"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Button
+        android:id="@+id/button1"
+        android:layout_width="0dip"
+        android:layout_weight="2"
+        android:layout_height="wrap_content"
+        android:text="@string/explore" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

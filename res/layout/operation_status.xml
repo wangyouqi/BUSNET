@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50sp"
+        android:background="@color/gray"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/home_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/close"
+            android:textColor="@color/white"
+            android:background="@color/dark_blue"
+            android:textSize="25sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/gray"
+            android:gravity="center"
+            android:text="@string/operation_status"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignTop="@+id/operation_status_mapview"
+                android:layout_weight="1"
+                android:padding="-5dp"
+                android:background="@color/black"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+            <CheckBox
+                    android:id="@+id/traffic"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dip"
+                    android:onClick="onTrafficToggled"
+                    android:textSize="14sp"
+                    android:text="@string/traffic"/>
+            <CheckBox
+                    android:id="@+id/my_location0"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dip"
+                    android:onClick="onMyLocationToggled"
+                    android:textSize="12sp"
+                    android:text="@string/hinomaru"
+                    android:checked="true"/>
+            <CheckBox
+                    android:id="@+id/my_location1"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dip"
+                    android:onClick="onMyLocationToggled"
+                    android:textSize="12sp"
+                    android:text="@string/nikko"
+                    android:checked="true"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--<com.google.android.maps.MapView-->
+    <fragment
+            android:id="@+id/operation_status_mapview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:apiKey="01vHZUNSpCUQNIAjOOlWcjL3eb2ShgU8TlcHcxQ"
+            android:clickable="true"
+            android:name="com.google.android.gms.maps.MapFragment" />
+
+</LinearLayout>
